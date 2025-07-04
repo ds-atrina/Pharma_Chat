@@ -24,14 +24,7 @@ import google.generativeai as genai
 load_dotenv()
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(message)s',
-    handlers=[
-        logging.FileHandler('natural_res.log'),
-        logging.StreamHandler()
-    ]
-)
+# 
 
 class PharmaChatbot:
     def __init__(self):
@@ -639,22 +632,22 @@ async def root():
     """Health check endpoint"""
     return {"message": "Pharma Chatbot API is running!", "status": "healthy"}
 
-@app.post("/query", response_model=QueryResponse)
-async def process_query(request: QueryRequest):
-    """
-    Process user query and return results with natural language response
-    """
-    try:
-        if not request.query.strip():
-            raise HTTPException(status_code=400, detail="Query cannot be empty")
+# @app.post("/query", response_model=QueryResponse)
+# async def process_query(request: QueryRequest):
+#     """
+#     Process user query and return results with natural language response
+#     """
+#     try:
+#         if not request.query.strip():
+#             raise HTTPException(status_code=400, detail="Query cannot be empty")
         
-        # Process the query using the chatbot
-        result = chatbot.handle_user_query(request.query)
+#         # Process the query using the chatbot
+#         result = chatbot.handle_user_query(request.query)
         
-        return QueryResponse(**result)
+#         return QueryResponse(**result)
         
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 # Legacy endpoint for backward compatibility
 @app.post("/chat")
@@ -700,11 +693,11 @@ async def get_history(session_id: str = "default"):
     history = chatbot.conversation_history.get(session_id, [])
     return {"session_id": session_id, "history": history}
     
-@app.post("/supervisor")
-async def handle_with_supervisor(request: QueryRequest):
-    graph = build_pharma_graph()
-    result = graph.invoke({"query": request.query})
-    return result
+# @app.post("/supervisor")
+# async def handle_with_supervisor(request: QueryRequest):
+#     graph = build_pharma_graph()
+#     result = graph.invoke({"query": request.query})
+#     return result
 
 
 # --- State Definition ---
