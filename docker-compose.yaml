@@ -1,0 +1,13 @@
+
+
+services:
+  pharma-chatbot:
+    build: .
+    container_name: pharma_chatbot
+    ports:
+      - "8003:8003"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    restart: always
